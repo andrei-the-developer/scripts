@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import dns.resolver
 import argparse
 from collections import defaultdict
@@ -21,6 +23,8 @@ def resolve_domains(domains):
         except Exception as e:
             print(f'Unable to resolve {domain}: {e}')
         print(f"\rResolving Domains: {i}/{len(domains)}  {int((i/len(domains))*100)}%", end='')
+
+    print("")
 
     # Sort IPs by the number of occurrences (from most common to least common)
     sorted_ips = sorted(ip_occurrences.items(), key=lambda x: x[1], reverse=True)
@@ -46,7 +50,9 @@ def main():
     for domain, ip in domain_ips.items():
         output_lines.append(f'{domain} : {ip}')
 
+    output_lines.append("")
     output_lines.append("=====================================")
+    output_lines.append("")
 
     for ip, count in sorted_ips:
         output_lines.append(f'IP: {ip}, Occurrences: {count}, Domains: {", ".join(ip_domains[ip])}')
